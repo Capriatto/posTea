@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+/GitDirectory/dist
+/GitDirectory/build
+/GitDirectory/nbproject
+/GitDirectory/build.xml
+/GitDirectory/manifest.mf
