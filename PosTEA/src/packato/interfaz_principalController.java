@@ -4,87 +4,117 @@
  */
 package packato;
 
+import java.awt.Toolkit;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import static packato.dataBase.getConexion;
+import javafx.stage.Stage;
+import notas.notaController;
 
 /**
+ * FXML Controller class
  *
  * @author Juan_Sebastian
  */
-public class interfaz_principalController implements Initializable {
+public class Interfaz_principalController implements Initializable {
+ ActionEvent evento;
+ private Stage stage;
+  String nick;
+ String contraseña;
+ int id_usuario;
+ @FXML
+ TextField txtNombre;
+ @FXML
+ TextField txtContraseña;
+ @FXML  
+ Button btnEntrar;
+ @FXML
+  Label lblError;
+
 
     @FXML
-    private Label label;
-    @FXML
-    ComboBox comboCategoria;
-    @FXML
-    TextField nombreNota;
-    @FXML
-    ToggleGroup prioridad;
-    @FXML
-    RadioButton rbAlta;
-    @FXML
-    RadioButton rbMedia;
-    @FXML
-    RadioButton rbBaja;
-    @FXML   
-    TextArea txtContenido;
+    private void handleButtonAction(ActionEvent event) throws IOException, SQLException {
+        lblError.setText("");
+        evento = event;
+         nick= txtNombre.getText().trim();
+         contraseña=txtContraseña.getText().trim();
+        if (!nick.isEmpty() || !contraseña.isEmpty()) {
 
-    public void cargarCombo() {
-        try {// combo categorias
-            dataBase.getConexion();
-            Statement statement = getConexion().createStatement();
-            ResultSet rs;
-            rs = statement.executeQuery("select nombre from categoria");
+            if (login(nick,contraseña)) {
+               
+                System.out.println("Se encontraron los datos.");
+                cambiarInterface("/notas/nota.fxml");
+                consultarId();
+                System.setProperty("key", String.valueOf(id_usuario));
+              } else {
+                Toolkit.getDefaultToolkit().beep();
+               lblError.setText("Error al entrar, no existe un usuario con estos datos.");
+            }
 
-            while (rs.next()) {
-                comboCategoria.getItems().add(rs.getString(1));
+        }
+      
+    }
+     public void cambiarInterface(String fxml) throws IOException {
+        Node node = (Node) evento.getSource();
+        stage = (Stage) node.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+     public void consultarId() {
+     try {
+        Connection conexion= dataBase.getConexion();
+         PreparedStatement pstm=conexion.prepareStatement("select id from usuario where nick=? limit 1");
+         pstm.setString(1, nick);
+        ResultSet rs=  pstm.executeQuery();
+        id_usuario=rs.getInt(1);
+     } catch (SQLException ex) {
+         Logger.getLogger(Interfaz_principalController.class.getName()).log(Level.SEVERE, null, ex);
+     }
+   }
+     
+    public boolean login(String nick, String contraseña) {
+        try {
+            Connection conexion = dataBase.getConexion();
+            PreparedStatement instruccion = conexion.prepareStatement("SELECT * FROM usuario WHERE nick= ?  AND contraseña= ?");
+            instruccion.setString(1, nick);
+            instruccion.setString(2, contraseña);
+            ResultSet resultados = instruccion.executeQuery();
+            
+            
+            if (resultados.next()) {
+
+                return true;
+            } else {
+                return false;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(interfaz_principalController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(notaController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 
-    @FXML
-    public void guardarNota() {
-        if (nombreNota != null) {
-            String nombreDeNota = nombreNota.getText();
-            int nombreCategoria = comboCategoria.getSelectionModel().getSelectedIndex();
-            rbAlta.setToggleGroup(prioridad);
-            rbMedia.setToggleGroup(prioridad);
-            rbBaja.setToggleGroup(prioridad);
-            String toggle = prioridad.selectedToggleProperty().toString();
-            int prioridadSelected;
-            if (toggle.contains("rbAlta")) {
-                prioridadSelected= 1;
-            } else if (toggle.contains("rbMedia")) {
-                 prioridadSelected= 2;
-            } else {
-                 prioridadSelected= 3;
-            }
-            String contenido= txtContenido.getText();
-            System.out.println("contenido = " + contenido);
-        }
- }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarCombo();
+        // TODO
     }
 }

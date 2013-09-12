@@ -53,12 +53,12 @@ public class dataBase {
         }
     }
 
-    public static String consulta(String query) throws SQLException {
+    public static ResultSet consulta(String query) throws SQLException {
         Statement statement = getConexion().createStatement();
         ResultSet rs;
         rs = statement.executeQuery(query);
-        System.out.println("" + rs.getString(1));
-      return query;
+        
+      return rs;
     }
 
     public static void liberaConexion(Connection conexion) {

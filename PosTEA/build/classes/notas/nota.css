@@ -1,0 +1,16 @@
+/* 
+    Document   : Interfaz_principal_css
+    Created on : 9/09/2013, 08:34:25 PM
+    Author     : Juan_Sebastian
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.botonInvisible{
+    
+    -fx-background-color: transparent;
+}

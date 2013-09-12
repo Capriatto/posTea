@@ -3,57 +3,26 @@
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
-<?import javafx.collections.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="330.0" prefWidth="808.0" style="" styleClass="Background" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="packato.interfaz_principalController">
+<AnchorPane id="AnchorPane" prefHeight="184.9998779296875" prefWidth="297.0" styleClass="botonInvisible" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="packato.Interfaz_principalController">
   <children>
-    <TextField layoutX="9.0" layoutY="34.0" prefWidth="167.0" promptText="buscar..." />
-    <Label layoutX="10.0" layoutY="57.0" text="Filtrar por:">
-      <textFill>
-        <Color blue="1.000" green="0.639" red="0.000" fx:id="x1" />
-      </textFill>
-    </Label>
-    <ListView layoutX="9.0" layoutY="124.0" prefHeight="196.0" prefWidth="200.0" />
-    <Separator layoutX="222.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="334.0" />
-    <TextField fx:id="nombreNota" layoutX="233.0" layoutY="43.0" prefWidth="179.0" promptText="Nombre de la nota..." />
-    <ComboBox fx:id="comboCategoria" layoutX="234.0" layoutY="72.0" prefWidth="179.0" promptText="Elija una Categoría" />
-    <Label layoutX="424.0" layoutY="22.0" text="Prioridad:" textFill="$x1" />
-    <TextArea fx:id="txtContenido" layoutX="234.0" layoutY="111.0" prefHeight="174.0" prefWidth="228.0" promptText="¿Qué te gustaría plasmar en esta nota?..." wrapText="true" />
-    <Button layoutX="233.0" layoutY="298.0" mnemonicParsing="false" onAction="#guardarNota" text="Guardar Nota" />
-    <Button layoutX="323.0" layoutY="299.0" mnemonicParsing="false" prefWidth="65.99990000000253" style="-fx-background-color: transparent;" text="Compartir" textFill="$x1" underline="false" />
-    <Separator layoutX="482.0" layoutY="-3.0" orientation="VERTICAL" prefHeight="333.9998779296875" />
-    <Label layoutX="623.0" layoutY="10.0" text="NOTAS" textFill="$x1">
-      <font>
-        <Font size="15.0" />
-      </font>
-    </Label>
-    <Label layoutX="234.0" layoutY="11.0" text="NUEVA NOTA:" textFill="$x1" />
-    <Label layoutX="11.0" layoutY="10.0" text="BUSCAR NOTA:" textFill="$x1">
-      <tooltip>
-        <Tooltip text="Buscar notas por nombre, categoría, prioridad." />
-      </tooltip>
-    </Label>
-    <RadioButton layoutX="9.0" layoutY="103.0" mnemonicParsing="false" text="Prioridad">
-      <toggleGroup>
-        <ToggleGroup fx:id="filtro" />
-      </toggleGroup>
-    </RadioButton>
-    <RadioButton layoutX="9.0" layoutY="79.0" mnemonicParsing="false" text="Categoría" toggleGroup="$filtro" />
-    <RadioButton fx:id="rbAlta" layoutX="423.0" layoutY="43.0" mnemonicParsing="false" selected="false" text="Alta">
-      <toggleGroup>
-        <ToggleGroup fx:id="prioridad" />
-      </toggleGroup>
-    </RadioButton>
-    <RadioButton fx:id="rbMedia" layoutX="423.0" layoutY="66.0" mnemonicParsing="false" selected="true" text="Media" toggleGroup="$prioridad" />
-    <RadioButton fx:id="rbBaja" layoutX="424.0" layoutY="89.0" mnemonicParsing="false" text="Baja" toggleGroup="$prioridad" />
-    <Button layoutX="308.0" layoutY="93.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Agregar categoria" textFill="$x1" />
+    <TextField fx:id="txtNombre" layoutX="33.0" layoutY="79.0" prefWidth="200.0" promptText="Nickname o nombre de usuario..." />
+    <Label layoutX="23.0" layoutY="37.0" text="INGRESAR A POSTEA" />
+    <Button fx:id="btnEntrar" layoutX="185.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Entrar" />
+    <Button layoutX="220.0" layoutY="1.0" mnemonicParsing="false" styleClass="botonInvisible" text="Registrarme" underline="true">
+      <stylesheets>
+        <URL value="@Interfaz_principal.css" />
+      </stylesheets>
+    </Button>
+    <Label layoutX="33.0" layoutY="65.0" prefWidth="115.5" text="Nombre de usuario:" />
+    <Label layoutX="33.0" layoutY="101.0" text="Contraseña:" />
+    <PasswordField fx:id="txtContraseña" layoutX="33.0" layoutY="115.0" prefWidth="200.0" promptText="Contraseña de usuario..." />
+    <Label fx:id="lblError" layoutX="10.0" layoutY="138.0" prefHeight="33.0" prefWidth="139.0" text="" textFill="#00a3ff" wrapText="true" />
   </children>
   <stylesheets>
-    <URL value="@Interfaz_principal_css.css" />
+    <URL value="@Interfaz_principal.css" />
   </stylesheets>
 </AnchorPane>
